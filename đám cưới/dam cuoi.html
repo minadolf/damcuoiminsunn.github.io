@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thiệp cưới Minh & Diệp</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Dancing+Script:wght@500;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --com-50:#f7f9ee;      /* cốm nhạt */
+  --com-100:#eaf0d4;
+  --com-200:#d8e3b5;
+  --com-300:#c2d393;
+  --com-500:#8fa876;
+  --com-700:#5d7a4a;
+  --com-900:#34472b;
+  --cream:#fcfaf1;
+  --blush:#f3dcd6;
+  --ink:#3b4a33;
+  --shadow:0 10px 30px rgba(93,122,74,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Be Vietnam Pro',system-ui,sans-serif;font-weight:300;color:var(--ink);
+  background:
+    radial-gradient(circle at 10% 0%,var(--com-100) 0,transparent 40%),
+    radial-gradient(circle at 90% 30%,#f4ecd8 0,transparent 35%),
+    radial-gradient(circle at 20% 80%,var(--com-100) 0,transparent 40%),
+    var(--cream);
+  overflow-x:hidden;
+}
+body.locked{overflow:hidden}
+h1,h2,h3{font-family:'Cormorant Garamond',serif;font-weight:500}
+.script{font-family:'Dancing Script',cursive}
+section{padding:90px 20px;max-width:1000px;margin:0 auto;text-align:center;position:relative}
+.eyebrow{letter-spacing:.35em;font-size:.72rem;text-transform:uppercase;color:var(--com-500);margin-bottom:10px}
+.title{font-size:clamp(2rem,6vw,3rem);color:var(--com-900);margin-bottom:8px}
+.divider{width:120px;height:14px;margin:12px auto 36px;background:
+  radial-gradient(circle,var(--com-500) 3px,transparent 4px) center/14px 14px no-repeat;
+  position:relative}
+.divider::before,.divider::after{content:"";position:absolute;top:6px;width:42px;height:1px;background:var(--com-300)}
+.divider::before{left:0}.divider::after{right:0}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s ease,transform 1s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== INTRO ENVELOPE ===== */
+#intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 40%,var(--com-50),var(--com-200));transition:opacity 1.2s ease,visibility 1.2s}
+#intro.gone{opacity:0;visibility:hidden}
+.intro-hint{position:absolute;bottom:9%;left:0;right:0;text-align:center;color:var(--com-700);letter-spacing:.2em;font-size:.8rem;
+  animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.envelope{position:relative;width:min(88vw,420px);height:min(60vw,290px);perspective:1200px;cursor:pointer}
+.env-back{position:absolute;inset:0;background:var(--com-300);border-radius:6px;box-shadow:var(--shadow)}
+.letter{position:absolute;left:6%;right:6%;top:6%;bottom:6%;background:var(--cream);border-radius:4px;
+  padding:22px 18px;text-align:center;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);transition:transform 1.1s cubic-bezier(.3,.8,.3,1) .6s,height 1.1s .6s;z-index:2;overflow:hidden}
+.letter .script{font-size:1.9rem;color:var(--com-700)}
+.letter p{font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.5;margin:8px 0}
+.letter .names{font-size:1.5rem;color:var(--com-900)}
+.letter .btn{margin-top:10px;opacity:0;pointer-events:none;transition:opacity .6s 1.5s}
+.env-front{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:
+   linear-gradient(to bottom right,transparent 49.5%,var(--com-200) 50%) left/50% 100% no-repeat,
+   linear-gradient(to bottom left,transparent 49.5%,var(--com-200) 50%) right/50% 100% no-repeat;
+  border-radius:6px}
+.env-front::after{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;
+  background:linear-gradient(to top right,var(--com-300) 49.5%,transparent 50%) left/50% 100% no-repeat,
+             linear-gradient(to top left,var(--com-300) 49.5%,transparent 50%) right/50% 100% no-repeat}
+.flap{position:absolute;left:0;right:0;top:0;height:58%;z-index:4;transform-origin:top center;
+  background:var(--com-500);clip-path:polygon(0 0,100% 0,50% 100%);transition:transform .8s ease,z-index 0s .4s}
+.seal{position:absolute;left:50%;top:50%;width:58px;height:58px;margin:-29px 0 0 -29px;z-index:5;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#e9b9b0,#c98a80);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:'Dancing Script',cursive;font-size:1.3rem;box-shadow:0 3px 8px rgba(0,0,0,.25);transition:opacity .4s}
+.envelope.open .flap{transform:rotateX(180deg);z-index:1}
+.envelope.open .seal{opacity:0}
+.envelope.open .letter{transform:translateY(-62%);height:112%;bottom:auto}
+.envelope.open .letter .btn{opacity:1;pointer-events:auto}
+.envelope.open{cursor:default}
+
+.btn{display:inline-block;border:1px solid var(--com-700);color:var(--com-700);background:transparent;padding:10px 26px;border-radius:40px;
+  font-family:inherit;letter-spacing:.12em;font-size:.78rem;text-transform:uppercase;cursor:pointer;transition:.3s;font-weight:400}
+.btn:hover{background:var(--com-700);color:#fff}
+.btn.solid{background:var(--com-700);color:#fff}
+.btn.solid:hover{background:var(--com-900)}
+
+/* ===== HERO ===== */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;max-width:none}
+#hero .save{font-size:1.5rem;color:var(--com-500)}
+#hero h1{font-family:'Dancing Script',cursive;font-weight:700;font-size:clamp(3.2rem,13vw,7rem);color:var(--com-700);line-height:1.05;margin:8px 0}
+#hero h1 span{display:block;font-size:.45em;color:var(--com-500);font-weight:500}
+.date{font-family:'Cormorant Garamond',serif;font-size:1.4rem;letter-spacing:.25em;color:var(--com-900)}
+.count{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap}
+.count div{width:74px;height:74px;border-radius:50%;background:rgba(255,255,255,.6);border:1px solid var(--com-300);
+  display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow)}
+.count b{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--com-700);line-height:1}
+.count small{font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;color:var(--com-500)}
+
+/* floating leaves */
+.leaf{position:fixed;top:-40px;width:18px;height:28px;border-radius:0 100% 0 100%;background:var(--com-300);opacity:.55;z-index:1;pointer-events:none;
+  animation:fall linear infinite}
+@keyframes fall{to{transform:translate3d(60px,110vh,0) rotate(540deg)}}
+main,header,footer{position:relative;z-index:2}
+
+/* ===== GREETING ===== */
+.card{background:rgba(255,255,255,.65);backdrop-filter:blur(4px);border:1px solid var(--com-200);border-radius:24px;
+  padding:44px 28px;box-shadow:var(--shadow);max-width:720px;margin:0 auto}
+.card p{font-family:'Cormorant Garamond',serif;font-size:1.3rem;line-height:1.8}
+.event{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-top:30px}
+.event div{background:var(--com-50);border-radius:16px;padding:20px 14px;border:1px solid var(--com-200)}
+.event h3{color:var(--com-700);font-size:1.2rem;margin-bottom:6px}
+.event p{font-size:.95rem;font-family:'Be Vietnam Pro';line-height:1.6}
+
+/* ===== COUPLE ===== */
+.pair{display:flex;gap:22px;justify-content:center;align-items:center;flex-wrap:wrap}
+.person{background:rgba(255,255,255,.7);border:1px solid var(--com-200);border-radius:28px;padding:36px 30px;min-width:260px;box-shadow:var(--shadow)}
+.person .role{font-size:1.6rem;color:var(--com-500)}
+.person h3{font-size:1.8rem;color:var(--com-900);margin:6px 0 10px}
+.person p{font-size:.92rem;color:var(--com-700);letter-spacing:.06em}
+.amp{font-size:3.4rem;color:var(--com-500);line-height:1}
+
+/* ===== STORY ===== */
+.timeline{position:relative;max-width:720px;margin:0 auto;text-align:left}
+.timeline::before{content:"";position:absolute;left:18px;top:0;bottom:0;width:1px;background:var(--com-300)}
+.tl{position:relative;padding:0 0 38px 56px}
+.tl::before{content:"";position:absolute;left:10px;top:6px;width:17px;height:17px;border-radius:50%;background:var(--cream);border:2px solid var(--com-500)}
+.tl .year{font-family:'Dancing Script';font-size:1.5rem;color:var(--com-700)}
+.tl h3{font-size:1.4rem;color:var(--com-900);margin-bottom:6px}
+.tl p{line-height:1.8;font-size:.95rem}
+
+/* ===== GALLERY ===== */
+.gallery{columns:3 220px;column-gap:14px}
+.gallery figure{break-inside:avoid;margin-bottom:14px;border-radius:16px;overflow:hidden;cursor:zoom-in;box-shadow:var(--shadow);background:var(--com-100);position:relative}
+.gallery img{width:100%;display:block;transition:transform .6s}
+.gallery figure:hover img{transform:scale(1.05)}
+.ph{display:flex;align-items:center;justify-content:center;color:var(--com-700);font-family:'Dancing Script';font-size:1.4rem;
+  background:linear-gradient(135deg,var(--com-200),var(--blush));width:100%}
+#lightbox{position:fixed;inset:0;z-index:150;background:rgba(40,55,32,.88);display:none;align-items:center;justify-content:center;padding:20px}
+#lightbox.show{display:flex}
+#lightbox img{max-width:100%;max-height:92vh;border-radius:10px}
+#lightbox button{position:absolute;top:16px;right:20px;background:none;border:0;color:#fff;font-size:2.2rem;cursor:pointer}
+
+/* ===== WISHES ===== */
+form{max-width:560px;margin:0 auto 46px;text-align:left;background:rgba(255,255,255,.7);border:1px solid var(--com-200);border-radius:22px;padding:28px;box-shadow:var(--shadow)}
+label{display:block;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--com-700);margin:14px 0 6px}
+input,textarea{width:100%;border:1px solid var(--com-300);background:var(--cream);border-radius:12px;padding:12px 14px;font:inherit;color:var(--ink);outline:none}
+input:focus,textarea:focus{border-color:var(--com-500);box-shadow:0 0 0 3px rgba(143,168,118,.2)}
+input[readonly]{background:var(--com-100);color:var(--com-700)}
+textarea{min-height:110px;resize:vertical}
+form .btn{margin-top:20px;width:100%}
+.note{font-size:.82rem;color:var(--com-700);margin-top:12px;text-align:center;min-height:1.2em}
+.wishes{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;text-align:left}
+.wish{background:rgba(255,255,255,.75);border:1px solid var(--com-200);border-radius:18px;padding:20px;box-shadow:var(--shadow);position:relative}
+.wish::before{content:"❝";position:absolute;top:6px;right:14px;font-size:2.2rem;color:var(--com-200)}
+.wish p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;line-height:1.6;margin-bottom:12px;white-space:pre-wrap;word-break:break-word}
+.wish b{display:block;color:var(--com-700);font-weight:500}
+.wish small{color:var(--com-500);font-size:.74rem}
+.empty{color:var(--com-500);font-style:italic}
+
+footer{text-align:center;padding:60px 20px 90px;color:var(--com-700)}
+footer .script{font-size:2.2rem}
+
+/* ===== MUSIC + ADMIN ===== */
+#musicBtn{position:fixed;right:16px;bottom:16px;z-index:60;width:48px;height:48px;border-radius:50%;border:1px solid var(--com-300);
+  background:rgba(255,255,255,.85);color:var(--com-700);font-size:1.2rem;cursor:pointer;box-shadow:var(--shadow);backdrop-filter:blur(4px)}
+#musicBtn.playing{animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#admin{position:fixed;left:16px;bottom:16px;z-index:60;background:rgba(255,255,255,.95);border:1px solid var(--com-300);border-radius:16px;
+  padding:14px;max-width:270px;box-shadow:var(--shadow);font-size:.8rem;display:none}
+#admin.show{display:block}
+#admin h4{font-family:'Cormorant Garamond';font-size:1.1rem;color:var(--com-900);margin-bottom:6px}
+#admin label{margin:8px 0 4px;font-size:.68rem}
+#admin input[type=file]{padding:6px;font-size:.75rem}
+#admin button{margin-top:6px;padding:6px 12px;font-size:.68rem}
+</style>
+</head>
+<body class="locked">
+
+<!-- INTRO: thư mở ra -->
+<div id="intro">
+  <div class="envelope" id="envelope" aria-label="Phong thư thiệp cưới">
+    <div class="env-back"></div>
+    <div class="letter">
+      <div class="script" id="ltTitle">Thư mời</div>
+      <p>Trân trọng kính mời bạn đến chung vui cùng chúng mình</p>
+      <div class="names script" id="ltNames"></div>
+      <button class="btn solid" id="enterBtn" type="button">Xem thiệp</button>
+    </div>
+    <div class="env-front"></div>
+    <div class="flap"></div>
+    <div class="seal" id="seal">M&amp;D</div>
+  </div>
+  <div class="intro-hint" id="hint">CHẠM VÀO PHONG THƯ ĐỂ MỞ</div>
+</div>
+
+<header id="hero">
+  <div class="script save reveal">Save the date</div>
+  <h1 class="reveal" id="heroNames"></h1>
+  <div class="date reveal" id="heroDate"></div>
+  <div class="count reveal" id="count"></div>
+</header>
+
+<main>
+  <!-- LỜI CHÀO -->
+  <section id="greeting">
+    <div class="eyebrow reveal">Lời chào</div>
+    <h2 class="title reveal">Gửi đến bạn thân yêu</h2>
+    <div class="divider reveal"></div>
+    <div class="card reveal">
+      <p id="greetText"></p>
+      <div class="event">
+        <div><h3>Thời gian</h3><p id="evTime"></p></div>
+        <div><h3>Địa điểm</h3><p id="evPlace"></p></div>
+        <div><h3>Trang phục</h3><p id="evDress"></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHÚ RỂ & CÔ DÂU -->
+  <section id="couple">
+    <div class="eyebrow reveal">Groom &amp; Bride</div>
+    <h2 class="title reveal">Chú rể &amp; Cô dâu</h2>
+    <div class="divider reveal"></div>
+    <div class="pair reveal">
+      <div class="person">
+        <div class="role script">Chú rể</div>
+        <h3 id="gFull"></h3>
+        <p>Sinh ngày <span id="gBirth"></span></p>
+      </div>
+      <div class="amp script">&amp;</div>
+      <div class="person">
+        <div class="role script">Cô dâu</div>
+        <h3 id="bFull"></h3>
+        <p>Sinh ngày <span id="bBirth"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÂU CHUYỆN -->
+  <section id="story">
+    <div class="eyebrow reveal">Our story</div>
+    <h2 class="title reveal">Câu chuyện của chúng mình</h2>
+    <div class="divider reveal"></div>
+    <div class="timeline">
+      <div class="tl reveal"><div class="year">2019</div><h3>Lần đầu gặp gỡ</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p></div>
+      <div class="tl reveal"><div class="year">2022</div><h3>Cùng nhau đi qua bốn mùa</h3>
+        <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p></div>
+      <div class="tl reveal"><div class="year">2025</div><h3>Lời cầu hôn</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p></div>
+    </div>
+  </section>
+
+  <!-- THƯ VIỆN ẢNH -->
+  <section id="library">
+    <div class="eyebrow reveal">Library</div>
+    <h2 class="title reveal">Thư viện ảnh cưới</h2>
+    <div class="divider reveal"></div>
+    <div class="gallery reveal" id="gallery"></div>
+  </section>
+
+  <!-- LỜI CHÚC -->
+  <section id="wishes">
+    <div class="eyebrow reveal">Guestbook</div>
+    <h2 class="title reveal">Gửi lời chúc phúc</h2>
+    <div class="divider reveal"></div>
+    <form id="wishForm" class="reveal" autocomplete="off">
+      <label for="wName">Họ và tên</label>
+      <input id="wName" maxlength="60" required placeholder="Nguyễn Văn A">
+      <label for="wTime">Ngày giờ chúc</label>
+      <input id="wTime" readonly>
+      <label for="wMsg">Lời chúc</label>
+      <textarea id="wMsg" maxlength="500" required placeholder="Chúc hai bạn trăm năm hạnh phúc..."></textarea>
+      <button class="btn solid" type="submit" id="wSubmit">Gửi lời chúc</button>
+      <div class="note" id="wNote"></div>
+    </form>
+    <div class="wishes" id="wishList"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="script" id="footNames"></div>
+  <p style="margin-top:8px;font-size:.85rem;letter-spacing:.15em">CẢM ƠN BẠN ĐÃ ĐẾN VỚI CHÚNG MÌNH</p>
+</footer>
+
+<button id="musicBtn" title="Bật/tắt nhạc" aria-label="Nhạc">♪</button>
+
+<!-- Bảng quản trị: mở bằng cách thêm ?edit=1 vào đường dẫn -->
+<div id="admin">
+  <h4>Quản lý (chỉ bạn thấy)</h4>
+  <label>Đổi nhạc (file .mp3)</label>
+  <input type="file" id="mp3In" accept="audio/mpeg,audio/*">
+  <button class="btn" id="mp3Reset" type="button">Dùng nhạc mặc định</button>
+  <label>Thêm ảnh vào thư viện</label>
+  <input type="file" id="imgIn" accept="image/*" multiple>
+  <button class="btn" id="imgReset" type="button">Xoá ảnh đã thêm</button>
+  <p style="margin-top:8px;color:var(--com-500);line-height:1.4">Thay đổi ở đây chỉ lưu trên trình duyệt này. Muốn mọi người cùng thấy: bỏ file vào thư mục và khai báo trong CONFIG.</p>
+</div>
+
+<div id="lightbox"><button aria-label="Đóng">×</button><img alt=""></div>
+<audio id="bgm" loop preload="auto"></audio>
+
+<script>
+/* =====================  CẤU HÌNH — SỬA Ở ĐÂY  ===================== */
+const CONFIG = {
+  groom: "Minh",                         // tên gọi ngắn (hiện ở bìa, đếm ngược)
+  bride: "Diệp",
+  groomFull: "Trần Công Minh",
+  brideFull: "Đoàn Ngọc Diệp",
+  groomBirth: "21/08/2001",
+  brideBirth: "18/11/1998",
+  weddingDate: "2026-12-20T11:00:00",     // ngày giờ tiệc (để đếm ngược)
+  dateText: "20 · 12 · 2026",
+  timeText: "Chủ nhật, 20/12/2026\nĐón khách từ 10:30",
+  placeText: "Nhà hàng / Trung tâm tiệc cưới\nĐịa chỉ của bạn",
+  dressText: "Tông xanh cốm, be, kem\nNhẹ nhàng, thanh lịch",
+  greeting: "Giữa bao nhiêu điều bình dị, chúng mình tìm thấy nhau. Ngày chúng mình về chung một nhà, sự hiện diện của bạn sẽ là món quà đẹp nhất. Trân trọng kính mời bạn đến chung vui và gửi cho chúng mình những lời chúc yêu thương.",
+
+  // Link Web App của Google Apps Script (xem HUONG-DAN.md). Để trống = chế độ DEMO (lưu tạm trên máy).
+  SCRIPT_URL: "",
+
+  // Nhạc nền: đặt file mp3 cạnh index.html rồi ghi tên vào đây
+  MUSIC_SRC: "",
+
+  // Ảnh trong thư viện: bỏ ảnh vào thư mục "anh/" rồi liệt kê. Để trống = hiện khung ảnh mẫu.
+  GALLERY: [
+    // "anh/01.jpg", "anh/02.jpg", "anh/03.jpg"
+  ]
+};
+/* ================================================================== */
+
+const $ = s => document.querySelector(s);
+const fmtNL = t => t.replace(/\n/g,"<br>");
+const names = `${CONFIG.groom} & ${CONFIG.bride}`;
+
+/* ---- điền nội dung ---- */
+$("#ltNames").textContent = names;
+$("#seal").textContent = CONFIG.groom[0]+"&"+CONFIG.bride[0];
+$("#heroNames").innerHTML = `${CONFIG.groom}<span>&</span>${CONFIG.bride}`;
+$("#heroDate").textContent = CONFIG.dateText;
+$("#footNames").textContent = names;
+$("#greetText").textContent = CONFIG.greeting;
+$("#evTime").innerHTML = fmtNL(CONFIG.timeText);
+$("#evPlace").innerHTML = fmtNL(CONFIG.placeText);
+$("#evDress").innerHTML = fmtNL(CONFIG.dressText);
+$("#gFull").textContent = CONFIG.groomFull;
+$("#bFull").textContent = CONFIG.brideFull;
+$("#gBirth").textContent = CONFIG.groomBirth;
+$("#bBirth").textContent = CONFIG.brideBirth;
+document.title = `Thiệp cưới ${names}`;
+
+/* ---- đếm ngược ---- */
+(function(){
+  const box = $("#count"), target = new Date(CONFIG.weddingDate).getTime();
+  const labels = ["Ngày","Giờ","Phút","Giây"];
+  function tick(){
+    let d = Math.max(0, target - Date.now());
+    const v = [Math.floor(d/864e5), Math.floor(d/36e5)%24, Math.floor(d/6e4)%60, Math.floor(d/1e3)%60];
+    box.innerHTML = v.map((n,i)=>`<div><b>${String(n).padStart(2,"0")}</b><small>${labels[i]}</small></div>`).join("");
+  }
+  tick(); setInterval(tick,1000);
+})();
+
+/* ---- lá rơi ---- */
+for(let i=0;i<14;i++){
+  const l=document.createElement("div"); l.className="leaf";
+  l.style.left=Math.random()*100+"vw";
+  l.style.animationDuration=(12+Math.random()*14)+"s";
+  l.style.animationDelay=(-Math.random()*20)+"s";
+  l.style.transform=`scale(${.6+Math.random()*.9})`;
+  l.style.opacity=.25+Math.random()*.35;
+  document.body.appendChild(l);
+}
+
+/* ---- hiện dần khi cuộn ---- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.12});
+function watchReveal(){document.querySelectorAll(".reveal:not(.in)").forEach(el=>io.observe(el))}
+watchReveal();
+
+/* =====================  IndexedDB (lưu mp3/ảnh chọn trên máy)  ===================== */
+const DB = {
+  open(){return new Promise((res,rej)=>{const r=indexedDB.open("wedding",1);r.onupgradeneeded=()=>r.result.createObjectStore("kv");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})},
+  async get(k){try{const db=await this.open();return await new Promise(r=>{const q=db.transaction("kv").objectStore("kv").get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>r(undefined)})}catch(e){return undefined}},
+  async set(k,v){try{const db=await this.open();return await new Promise(r=>{const t=db.transaction("kv","readwrite");t.objectStore("kv").put(v,k);t.oncomplete=()=>r(true);t.onerror=()=>r(false)})}catch(e){return false}},
+  async del(k){try{const db=await this.open();return await new Promise(r=>{const t=db.transaction("kv","readwrite");t.objectStore("kv").delete(k);t.oncomplete=()=>r(true)})}catch(e){return false}}
+};
+
+/* =====================  NHẠC  ===================== */
+const bgm = $("#bgm"), mBtn = $("#musicBtn");
+let musicUrl = null;
+mBtn.hidden = true;
+async function loadMusic(){
+  const blob = await DB.get("music");
+  if(musicUrl && musicUrl.startsWith("blob:")) URL.revokeObjectURL(musicUrl);
+  musicUrl = blob ? URL.createObjectURL(blob) : CONFIG.MUSIC_SRC;
+  if(!musicUrl) return;
+  bgm.src = musicUrl; bgm.volume = .6;
+  mBtn.hidden = false;
+}
+function setPlayingUI(){mBtn.classList.toggle("playing",!bgm.paused);mBtn.textContent=bgm.paused?"♪":"❀"}
+bgm.addEventListener("play",setPlayingUI);bgm.addEventListener("pause",setPlayingUI);
+mBtn.onclick=()=>{bgm.paused?bgm.play().catch(()=>{}):bgm.pause()};
+loadMusic();
+
+/* =====================  THƯ MỞ RA  ===================== */
+const env = $("#envelope");
+function openEnvelope(){
+  if(env.classList.contains("open")) return;
+  env.classList.add("open"); $("#hint").style.opacity=0;
+  bgm.play().catch(()=>{});            // phát nhạc ngay khi người xem chạm (trình duyệt cho phép)
+}
+env.addEventListener("click",openEnvelope);
+$("#enterBtn").addEventListener("click",e=>{
+  e.stopPropagation();
+  $("#intro").classList.add("gone"); document.body.classList.remove("locked");
+  bgm.play().catch(()=>{});
+});
+
+/* =====================  GALLERY  ===================== */
+let localPhotos = [];
+async function renderGallery(){
+  const g = $("#gallery"); g.innerHTML="";
+  const urls = [...CONFIG.GALLERY];
+  localPhotos = (await DB.get("photos")) || [];
+  const blobUrls = localPhotos.map(b=>URL.createObjectURL(b));
+  const all = urls.concat(blobUrls);
+  if(!all.length){
+    const hs=[260,200,320,240,300,220];
+    hs.forEach((h,i)=>{const f=document.createElement("figure");f.innerHTML=`<div class="ph" style="height:${h}px">Ảnh ${i+1}</div>`;g.appendChild(f)});
+    return;
+  }
+  all.forEach(src=>{
+    const f=document.createElement("figure"), im=document.createElement("img");
+    im.src=src; im.loading="lazy"; im.alt="Ảnh cưới";
+    f.appendChild(im); f.onclick=()=>{$("#lightbox img").src=src;$("#lightbox").classList.add("show")};
+    g.appendChild(f);
+  });
+}
+$("#lightbox").onclick=()=>$("#lightbox").classList.remove("show");
+renderGallery();
+
+/* =====================  LỜI CHÚC  ===================== */
+const pad=n=>String(n).padStart(2,"0");
+function nowStr(){const d=new Date();return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`}
+function refreshTime(){$("#wTime").value=nowStr()}
+refreshTime(); setInterval(refreshTime,30000);
+
+const DEMO = !CONFIG.SCRIPT_URL;
+async function loadWishes(){
+  const list=$("#wishList"); let rows=[];
+  try{
+    if(DEMO){
+      rows = JSON.parse(localStorage.getItem("demoWishes")||"[]").filter(w=>w.approved);
+      if(!rows.length) rows=[{time:"01/01/2026 09:00",name:"Khách mời mẫu",message:"Chúc hai bạn trăm năm hạnh phúc! (Đây là lời chúc mẫu — chưa kết nối Google Sheet)"}];
+    } else {
+      const r = await fetch(CONFIG.SCRIPT_URL+"?action=list",{cache:"no-store"});
+      const j = await r.json(); rows = j.wishes||[];
+    }
+  }catch(e){ list.innerHTML='<p class="empty" style="grid-column:1/-1;text-align:center">Chưa tải được lời chúc, vui lòng thử lại sau.</p>'; return; }
+  list.innerHTML="";
+  if(!rows.length){list.innerHTML='<p class="empty" style="grid-column:1/-1;text-align:center">Hãy là người đầu tiên gửi lời chúc nhé 💚</p>';return}
+  rows.forEach(w=>{
+    const c=document.createElement("div"); c.className="wish";
+    const p=document.createElement("p"); p.textContent=w.message;
+    const b=document.createElement("b"); b.textContent=w.name;
+    const s=document.createElement("small"); s.textContent=w.time;
+    c.append(p,b,s); list.appendChild(c);
+  });
+}
+$("#wishForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const btn=$("#wSubmit"), note=$("#wNote");
+  const data={name:$("#wName").value.trim(), time:nowStr(), message:$("#wMsg").value.trim()};
+  if(!data.name||!data.message) return;
+  btn.disabled=true; note.textContent="Đang gửi...";
+  try{
+    if(DEMO){
+      const a=JSON.parse(localStorage.getItem("demoWishes")||"[]"); a.push({...data,approved:false});
+      localStorage.setItem("demoWishes",JSON.stringify(a));
+    } else {
+      await fetch(CONFIG.SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(data)});
+    }
+    note.textContent="Cảm ơn bạn! Lời chúc sẽ hiển thị sau khi được cô dâu chú rể duyệt 💚";
+    $("#wishForm").reset(); refreshTime();
+  }catch(err){ note.textContent="Gửi chưa được, bạn thử lại nhé."; }
+  btn.disabled=false;
+});
+loadWishes();
+
+/* =====================  QUẢN TRỊ (?edit=1)  ===================== */
+if(new URLSearchParams(location.search).get("edit")==="1"){
+  $("#admin").classList.add("show");
+  $("#mp3In").onchange=async e=>{const f=e.target.files[0]; if(!f) return; await DB.set("music",f); await loadMusic(); bgm.play().catch(()=>{});};
+  $("#mp3Reset").onclick=async()=>{await DB.del("music");await loadMusic()};
+  $("#imgIn").onchange=async e=>{const cur=(await DB.get("photos"))||[]; await DB.set("photos",cur.concat([...e.target.files])); renderGallery()};
+  $("#imgReset").onclick=async()=>{await DB.del("photos");renderGallery()};
+}
+</script>
+</body>
+</html>
